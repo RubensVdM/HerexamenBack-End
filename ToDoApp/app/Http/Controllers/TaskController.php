@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Illuminate\Http\Request;
+use Session;
 
 class TaskController extends Controller
 {
@@ -14,7 +15,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.index');
+        $tasks = Task::orderBy('id', 'desc')->get();
+
+        return view ('tasks.index')->with('savedTasks', $tasks);
     }
 
     /**
@@ -35,7 +38,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+            [
+            'newTaskName' => 'required|min:10|max:199',
+            'taskDescription' => 'required',
+            'taskDate' => 'required'
+            ]);
+
+        $task = new Task;
+
+        $task->name = $request->newTaskName;
+        $task->description = $request->taskDescription;
+        $task->date = $request->taskDate;
+
+        $task->save();
+
+        Session::flash('success', 'Jouw nieuwe taak is succesvol toegevoegd!');
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -78,8 +98,12 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }
