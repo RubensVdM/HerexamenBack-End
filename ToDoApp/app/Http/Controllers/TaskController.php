@@ -38,8 +38,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
-            [
+        $this->validate($request,[
             'newTaskName' => 'required|min:10|max:199',
             'taskDescription' => 'required',
             'taskDate' => 'required'
@@ -91,11 +90,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,
-            [
+        $this->validate($request,[
             'taskNameUpdate' => 'required|min:10|max:199',
             'taskDescriptionUpdate' => 'required',
-            'taskDateUpdate' => 'required'
+            'taskDateUpdate' => 'required',
             ]);
         
         $task = Task::find($id);
@@ -103,6 +101,8 @@ class TaskController extends Controller
         $task->name = $request->taskNameUpdate;
         $task->description = $request->taskDescriptionUpdate;
         $task->date = $request->taskDateUpdate;
+        $task->user_id = Auth::id();
+        $task->done = 0;
 
         $task->save();
         

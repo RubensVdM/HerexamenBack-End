@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -45,7 +49,7 @@
             </div>
 
             <div class="form-row">
-                <a href="" class="btn btn-secondary">Terug naar mijn taken</a>
+                <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Terug naar mijn taken</a>
             </div>
         </form>
 
@@ -68,6 +72,8 @@
             </div>
         @endif
     </div>
+
+    @endsection
     
 </body>
 </html>
