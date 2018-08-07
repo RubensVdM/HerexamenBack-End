@@ -19,20 +19,22 @@
             <h1>Bewerken</h1>
         </div>
 
-        <form action="" method="">
+        <form action=" {{ route('tasks.update', [$taskBeingEdited->id]) }} " method="POST">
         {{ csrf_field() }}
-            <div class="form-row">
-                <div class="col">
-                    <input type="text" class="form-control" name="newTaskName">
-                </div>
-            </div>
+        <input type="hidden" name="_method" value="PUT">
 
             <div class="form-row">
                 <div class="col">
-                    <textarea class="form-control" name="taskDescription"></textarea>
+                    <input type="text" class="form-control" value="{{ $taskBeingEdited->name }}" name="taskNameUpdate">
+                </div>
+            </div>
+
+            <div class="form-row"> 
+                <div class="col">
+                    <textarea class="form-control" name="taskDescriptionUpdate">{{ $taskBeingEdited->description }}</textarea>
                 </div>
                 <div class="col">
-                    <input type="date" class="form-control" name="taskDate">
+                    <input type="date" class="form-control" value="{{ $taskBeingEdited->date }}" name="taskDateUpdate">
                 </div>
             </div>
 

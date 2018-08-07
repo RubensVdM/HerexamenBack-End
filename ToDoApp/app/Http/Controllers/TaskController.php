@@ -77,7 +77,9 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        return view('tasks.edit');
+        $task = Task::find($id);
+
+        return view('tasks.edit')->with('taskBeingEdited', $task);
     }
 
     /**
@@ -87,9 +89,26 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+            [
+            'taskNameUpdate' => 'required|min:10|max:199',
+            'taskDescriptionUpdate' => 'required',
+            'taskDateUpdate' => 'required'
+            ]);
+        
+        $task = Task::find($id);
+
+        $task->name = $request->taskNameUpdate;
+        $task->description = $request->taskDescriptionUpdate;
+        $task->date = $request->taskDateUpdate;
+
+        $task->save();
+        
+        Session::flash('success', 'Jouw taak is succesvol aangepast!');
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -103,6 +122,8 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         $task->delete();
+
+        Session::flash('success', 'Jouw taak is succesvol verwijdert!');
 
         return redirect()->route('tasks.index');
     }
