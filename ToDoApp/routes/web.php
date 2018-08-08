@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/tasks', 'TaskController');
+Route::resource('/tasks', 'TaskController')->middleware('authenticated');
 
 Auth::routes();
 
