@@ -27,7 +27,7 @@
                 <a class="navbar-brand" href="{{ url('/tasks') }}">
                     ToDo App
                 </a>
-                <a class="navbar" href="#">
+                <a class="navbar" href="{{ url('/archive') }}">
                     Mijn archief
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

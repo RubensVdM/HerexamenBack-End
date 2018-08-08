@@ -77,23 +77,35 @@
                     <th>Datum</th>
                     <th>Bewerken</th>
                     <th>Verwijderen</th>
+                    <th>Voltooid</th>
                 </thead>
 
                 <tbody>
                     @foreach ($savedTasks as $savedTask)
                         <tr>
-                            <th>{{ $savedTask->id }}</th>
-                            <td>{{ $savedTask->name }}</td>
-                            <td>{{ $savedTask->description }}</td>
-                            <td>{{ $savedTask->date }}</td>
-                            <td><a href="{{ route('tasks.edit', ['tasks' => $savedTask->id]) }}" class="btn btn-info">Bewerk</a></td>
-                            <td>
-                                <form action="{{ route('tasks.destroy', ['tasks' => $savedTask->id]) }}" method="POST">
-                                {{ csrf_field() }}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="submit" class="btn btn-danger btn-block" value="Verwijder">
-                                </form>
-                            </td>
+                        @if(auth()->user()->id == $savedTask->user_id)
+                            @if(auth()->user()->done == 0)
+                                <th>{{ $savedTask->id }}</th>
+                                <td>{{ $savedTask->name }}</td>
+                                <td>{{ $savedTask->description }}</td>
+                                <td>{{ $savedTask->date }}</td>
+                                <td><a href="{{ route('tasks.edit', ['tasks' => $savedTask->id]) }}" class="btn btn-info">Bewerk</a></td>
+                                <td>
+                                    <form action="{{ route('tasks.destroy', ['tasks' => $savedTask->id]) }}" method="POST">
+                                    {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="submit" class="btn btn-danger btn-block" value="Verwijder">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="">
+                                    {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="COMPLETE">
+                                        <input type="submit" class="btn btn-block btn-success" value="Voltooi">
+                                    </form>
+                                </td>
+                            @endif
+                        @endif
                         </tr>
                     @endforeach
                 </tbody>

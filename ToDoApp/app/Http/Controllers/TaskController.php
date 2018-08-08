@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class TaskController extends Controller
 {
@@ -49,6 +50,8 @@ class TaskController extends Controller
         $task->name = $request->newTaskName;
         $task->description = $request->taskDescription;
         $task->date = $request->taskDate;
+        $task->user_id = Auth::id();
+        $task->done = 0;
 
         $task->save();
 
@@ -101,8 +104,6 @@ class TaskController extends Controller
         $task->name = $request->taskNameUpdate;
         $task->description = $request->taskDescriptionUpdate;
         $task->date = $request->taskDateUpdate;
-        $task->user_id = Auth::id();
-        $task->done = 0;
 
         $task->save();
         
