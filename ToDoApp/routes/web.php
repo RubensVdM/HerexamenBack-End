@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/archive', function(){
-    return view('tasks.archive');
-});
-
 Route::resource('/tasks', 'TaskController')->middleware('authenticated');
 
 Auth::routes();

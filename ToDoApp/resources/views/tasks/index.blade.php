@@ -77,7 +77,7 @@
                     <th>Datum</th>
                     <th>Bewerken</th>
                     <th>Verwijderen</th>
-                    <th>Voltooid</th>
+                    <th>Voltooid?</th>
                 </thead>
 
                 <tbody>
@@ -101,7 +101,7 @@
                                     <form action="">
                                     {{ csrf_field() }}
                                         <input type="hidden" name="_method" value="COMPLETE">
-                                        <input type="submit" class="btn btn-block btn-success" value="Voltooi">
+                                        <input type="submit" class="btn btn-block btn-success" value="Done">
                                     </form>
                                 </td>
                             @endif
