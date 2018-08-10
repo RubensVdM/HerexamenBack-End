@@ -10,6 +10,8 @@
     <!--BOOTSTRAP CSS-->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <!--BOOTSTRAP JS-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
@@ -19,9 +21,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="form-row">
-            <h1>Uw lijst met Todo's</h1>
-        </div>
 
         <!--SUCCES MESSAGES-->
         @if (Session::has('success'))
@@ -43,17 +42,18 @@
         @endif
 
         <!--ADD NEW TASK-->
-        <form action=" {{ route('tasks.store')}} " method="POST">
+        <h1>Taak toevoegen</h1>
+        <form action=" {{ route('tasks.store')}}" class="ADDT" method="POST">
         {{ csrf_field() }}
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" name="newTaskName">
+                    <input type="text" class="form-control" name="newTaskName" placeholder="Naam">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="col">
-                    <textarea class="form-control" name="taskDescription"></textarea>
+                    <textarea class="form-control" name="taskDescription" placeholder="Omschrijving"></textarea>
                 </div>
                 <div class="col">
                     <input type="date" class="form-control" name="taskDate">
@@ -68,16 +68,17 @@
         </form>
 
         <!--DISPLAY TASKS-->
+        <h1>Mijn taken</h1>
         @if (count($savedTasks)>0)
             <table class="table">
                 <thead>
-                    <th>Nummer Taak</th>
+                    <th># Taak</th>
                     <th>Naam</th>
                     <th>Omschrijving</th>
                     <th>Datum</th>
                     <th>Bewerken</th>
                     <th>Verwijderen</th>
-                    <th>Voltooid?</th>
+                    <th>Voltooid</th>
                 </thead>
 
                 <tbody>
@@ -100,7 +101,6 @@
                                 <td>
                                     <form action="">
                                     {{ csrf_field() }}
-                                        <input type="hidden" name="_method" value="COMPLETE">
                                         <input type="submit" class="btn btn-block btn-success" value="Done">
                                     </form>
                                 </td>

@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::resource('/tasks', 'TaskController')->middleware('authenticated');
 
+Route::resource('/archives', 'ArchiveController')->middleware('authenticated');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
