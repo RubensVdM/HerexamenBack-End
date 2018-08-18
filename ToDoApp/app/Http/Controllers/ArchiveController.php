@@ -35,7 +35,25 @@ class ArchiveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'newTaskName' => 'required|min:10|max:199',
+            'taskDescription' => 'required',
+            'taskDate' => 'required'
+            ]);
+
+        $taskarchived = new taskArchived;
+
+        $taskarchived->name = $request->newTaskName;
+        $taskarchived->description = $request->taskDescription;
+        $taskarchived->date = $request->taskDate;
+        $taskarchived->user_id = Auth::id();
+        $taskarchived->done = 0;
+
+        $taskarchived->save();
+
+        Session::flash('success', 'Jouw taak is succesvol aan het archief toegevoegd!');
+
+        return redirect()->route('archives.index');
     }
 
     /**
